@@ -7,6 +7,8 @@ add_executable( realtrain realtrain.cpp ) # executable
 target_link_libraries( realtrain ${OpenCV_LIBS} ) # link OpenCV libraries
 add_executable( realtest realtest.cpp ) # executable
 target_link_libraries( realtest ${OpenCV_LIBS} ) # link OpenCV libraries
+add_executable( thresholddeterminer thresholddeterminer.cpp ) # executable
+target_link_libraries( thresholddeterminer ${OpenCV_LIBS} ) # link OpenCV libraries
 
 file(COPY "assets/" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/) # copy assets to build
 
