@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9) # set CMAKE version
 set( CMAKE_CXX_STANDARD 11 ) # set C++ standard to c11
-project( OpenCVLearning ) # name of the project
+project( vs-ai-vision ) # name of the project
 find_package( OpenCV REQUIRED ) # find library in system
 include_directories( ${OpenCV_INCLUDE_DIRS} ) # include all library dirs
 add_executable( realtrain realtrain.cpp ) # executable
