@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 #include <opencv2/highgui.hpp>
@@ -11,7 +12,9 @@ using namespace std;
 using namespace cv;
 
 void showImage(string name, Mat image) {
+    namedWindow(name, WINDOW_KEEPRATIO);
     imshow(name, image);
+    resizeWindow(name, 500, 500);
     waitKey(0);
     destroyWindow(name);
 }
@@ -35,29 +38,31 @@ Mat deskew(Mat &img) {
 
 int main() {
 
-    Mat image = imread("assets/mynumbers.jpeg");
+    /* Mat image = imread("assets/mynumbers.jpeg"); */
+    Mat image = imread("assets/realtest3.jpg");
     /* bitwise_not(image, image); */
-    /* showImage("Original", image); */
+    // showImage("Original", image);
 
     Mat resizedImage;
-    resize(image, resizedImage, Size(1000, 250));
-    /* showImage("Resized", resizedImage); */
+    resize(image, resizedImage, Size(700, 300));
+    // showImage("Resized", resizedImage);
 
     Mat grayImage;
     cvtColor(resizedImage, grayImage, COLOR_BGR2GRAY);
-    /* showImage("Grayscale", grayImage); */
+    // showImage("Grayscale", grayImage);
 
     Mat threshImage;
-    threshold(grayImage, threshImage, 128, 255, THRESH_BINARY);
-    /* showImage("Thresh", threshImage); */
+    threshold(grayImage, threshImage, 179, 255, THRESH_BINARY);
+    // showImage("Thresh", threshImage);
 
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
-    findContours(threshImage, contours, hierarchy, RETR_TREE, CHAIN_APPROX_NONE);
+    findContours(threshImage, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+    /* findContours(threshImage, contours, hierarchy, RETR_CCOMP, CHAIN_APPROX_NONE); */
 
     Mat imageClone = resizedImage.clone();
     drawContours(imageClone, contours, -1, Scalar(0, 255, 0), 1);
-    /* showImage("Contours with NONE", imageClone); */
+    // showImage("Contours with SIMPLE", imageClone);
 
     imageClone = resizedImage.clone();
     vector<Mat> numbers;
@@ -65,8 +70,10 @@ int main() {
     
     for (int i = 0; i < contours.size(); i++) {
         Rect bound = boundingRect(contours.at(i));
-        if (bound.area() > 500 && bound.area() < 1000 * 250) {
-            cout << bound.area() << endl;
+        /* if (bound.width >= 15 && bound.height >= 15 && bound.area() > 400 && bound.area() < 400 * 400) { */
+
+        if (bound.area() > 1000 && bound.area() < 400 * 400) {
+            /* cout << bound.area() << endl; */
 
             int beginX = bound.x - 10;
             int endX = bound.x + bound.width + 10;
@@ -76,47 +83,70 @@ int main() {
             numbersX.push_back(bound.x);
             numbersY.push_back(bound.y);
 
-            numbers.push_back(threshImage.colRange(beginX, endX).rowRange(beginY, endY).clone());
+            try {
+                numbers.push_back(threshImage.colRange(beginX, endX).rowRange(beginY, endY).clone());
 
-            rectangle(imageClone, Point(beginX, beginY), Point(endX, endY), Scalar(0, 255, 0), 2);
+                /* rectangle(imageClone, Point(beginX, beginY), Point(endX, endY), Scalar(0, 255, 0), 2); */
+            } catch (cv::Exception exc) {
+                try {
+                    beginX = bound.x;
+                    endX = bound.x + bound.width;
+                    beginY = bound.y;
+                    endY = bound.y + bound.height;
+
+                    numbersX.at(numbersX.size() - 1) = bound.x;
+                    numbersY.at(numbersY.size() - 1) = bound.y;
+
+                    numbers.push_back(threshImage.colRange(beginX, endX).rowRange(beginY, endY).clone());
+
+                    /* rectangle(imageClone, Point(beginX, beginY), Point(endX, endY), Scalar(0, 255, 0), 2); */
+                } catch (cv::Exception exc) {
+                    continue;
+                }
+            }
         }
     }
 
-    showImage("Bounded", imageClone);
+    // showImage("Bounded", imageClone);
+
+    /* Mat imageClone2 = imageClone.clone(); */
 
     int quantNumbers = numbersX.size();
 
+    int posToBeDeleted = -1;
+
     /* cout << quantNumbers << " " << numbersY.size() << " " << numbers.size() << endl; */
 
-    for (int j = quantNumbers - 1; j > 0; j--) {
+    for (int j = quantNumbers - 1; j >= 0; j--) {
         for (int i = 0; i < j; i++) {
-            bool changed = false;
+            bool sameRow = (numbersY.at(i) > resizedImage.rows / 2 && numbersY.at(i + 1) > resizedImage.rows / 2) ||
+                (numbersY.at(i) < resizedImage.rows / 2 && numbersY.at(i + 1) < resizedImage.rows / 2);
 
-            if (numbersX.at(i) > numbersX.at(i + 1)) {
+            if (abs(numbersX.at(i) - numbersX.at(i + 1)) <= 15 && abs(numbersY.at(i) - numbersY.at(i + 1)) <= 15)
+                posToBeDeleted = i;
+
+            if (sameRow && numbersX.at(i) > numbersX.at(i + 1)) {
+
+                /* cout << numbersY.at(i) << " and " << numbersY.at(i + 1) << endl; */ 
+
                 int temp = numbersX.at(i);
                 numbersX.at(i) = numbersX.at(i + 1);
                 numbersX.at(i + 1) = temp;
-                changed = true;
-            }
-            /* if (numbersY.at(i) > numbersY.at(i + 1)) { */
-            /*     int temp = numbersY.at(i); */
-            /*     numbersY.at(i) = numbersY.at(i + 1); */
-            /*     numbersY.at(i + 1) = temp; */
-            /*     changed = true; */
-            /* } */
-            if (changed) {
-                Mat temp = numbers.at(i);
+
+                temp = numbersY.at(i);
+                numbersY.at(i) = numbersY.at(i + 1);
+                numbersY.at(i + 1) = temp;
+
+                Mat tempMat = numbers.at(i);
                 numbers.at(i) = numbers.at(i + 1);
-                numbers.at(i + 1) = temp;
+                numbers.at(i + 1) = tempMat;
+
             }
         }
+        /* showImage("X: " + to_string(numbersX.at(j)) + " and Y: " + to_string(numbersY.at(j)), numbers.at(j)); */
     }
 
     HOGDescriptor hog = HOGDescriptor(
-        /* Size(20, 20), // winSize */
-        /* Size(8, 8), // blockSize */
-        /* Size(4, 4), // blockStride */
-        /* Size(8, 8), // cellSize */
         Size(40, 40), // winSize
         Size(16, 16), // blockSize
         Size(8, 8), // blockStride
@@ -132,6 +162,13 @@ int main() {
     );
 
     vector<vector<float>> hogDescriptors;
+
+    if (posToBeDeleted != -1) {
+        numbersX.erase(numbersX.begin() + posToBeDeleted);
+        numbersY.erase(numbersY.begin() + posToBeDeleted);
+        numbers.erase(numbers.begin() + posToBeDeleted);
+        quantNumbers = numbersX.size();
+    }
 
     for (int i = 0; i < quantNumbers; i++) {
         /* cout << x << endl; */
@@ -179,24 +216,21 @@ int main() {
 
     Mat answerMat;
 
-    // fire time → TESTING
+    /* // fire time → TESTING */
     svm -> predict(hogMat, answerMat);
 
+    cout << "[ ";
     for (int i = 0; i < answerMat.rows; i++) {
-        /* imshow("Predicted number: " + to_string(answerMat.at<float>(i, 0)), numbers.at(numbersX.at(i))); */
+        /* showImage("Predicted number: " + to_string(answerMat.at<float>(i, 0)), numbers.at(i)); */
         /* waitKey(0); */
         /* destroyAllWindows(); */
-        /* cout << answerMat.at<float>(i, 0) << endl; */
-        if (i == 0)
-            putText(imageClone, to_string((int) answerMat.at<float>(i, 0)), Point(numbersX.at(i) - 20, numbersY.at(i) - 30), FONT_HERSHEY_PLAIN, 1.0, Scalar(0, 0, 255));
-        else if (i == answerMat.rows - 1)
-            putText(imageClone, to_string((int) answerMat.at<float>(i, 0)), Point(numbersX.at(i), numbersY.at(i)), FONT_HERSHEY_PLAIN, 1.0, Scalar(0, 0, 255));
-        else
-            putText(imageClone, to_string((int) answerMat.at<float>(i, 0)), Point(numbersX.at(i) - 20, numbersY.at(i) - 10), FONT_HERSHEY_PLAIN, 1.0, Scalar(0, 0, 255));
-        
+        if (i == answerMat.rows - 1) cout << answerMat.at<float>(i, 0) << " ]" << endl;
+        else cout << answerMat.at<float>(i, 0) << ", ";
+        /* putText(imageClone, to_string((int) answerMat.at<float>(i, 0)), Point(numbersX.at(i), numbersY.at(i)), FONT_HERSHEY_PLAIN, 1.0, Scalar(0, 0, 255)); */
     }
 
-    showImage("Final", imageClone);
+    /* showImage("Final", imageClone); */
+
 
     return 0;
 }
