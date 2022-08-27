@@ -2,17 +2,17 @@
 
 ## Compiling and executing real writing
 
-Execute the following commands at the root of the project:
+Execute the following commands inside \<root\>/lib/src/svm of the project:
     
     cmake . -B build
     cd build
     make
-    ./realtrain
-    ./realtest
+    ./svmtrain
+    ./svmtest
 
 ## Compiling and executing samples
 
-Execute the following commands at the root of the project:
+Execute the following commands inside \<root\>/lib/src/svm/svmsamples of the project:
 
     cd svmsamples
     cmake . -B build
