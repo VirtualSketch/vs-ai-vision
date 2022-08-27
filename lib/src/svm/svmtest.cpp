@@ -18,7 +18,7 @@ int main(void) {
 
     /*
      * All predictions from image1 to image3 were used to
-     * calibrate the image preprocessing and the SVMs
+     * calibrate the image preprocessing and the SVM.
      * That's why they are commented in the code.
      *
      * Uncomment them to see the other results.
