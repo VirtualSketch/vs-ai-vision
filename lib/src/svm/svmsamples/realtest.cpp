@@ -5,7 +5,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/ml.hpp>
-#include <opencv4/opencv2/core/matx.hpp>
+#include <opencv2/core/matx.hpp>
 #include <string>
 
 using namespace std;
@@ -41,19 +41,19 @@ int main() {
     /* Mat image = imread("assets/mynumbers.jpeg"); */
     Mat image = imread("assets/realtest3.jpg");
     /* bitwise_not(image, image); */
-    // showImage("Original", image);
+    showImage("Original", image);
 
     Mat resizedImage;
     resize(image, resizedImage, Size(700, 300));
-    // showImage("Resized", resizedImage);
+    showImage("Resized", resizedImage);
 
     Mat grayImage;
     cvtColor(resizedImage, grayImage, COLOR_BGR2GRAY);
-    // showImage("Grayscale", grayImage);
+    showImage("Grayscale", grayImage);
 
     Mat threshImage;
     threshold(grayImage, threshImage, 179, 255, THRESH_BINARY);
-    // showImage("Thresh", threshImage);
+    showImage("Thresh", threshImage);
 
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
@@ -62,7 +62,7 @@ int main() {
 
     Mat imageClone = resizedImage.clone();
     drawContours(imageClone, contours, -1, Scalar(0, 255, 0), 1);
-    // showImage("Contours with SIMPLE", imageClone);
+    showImage("Contours with SIMPLE", imageClone);
 
     imageClone = resizedImage.clone();
     vector<Mat> numbers;
@@ -107,7 +107,7 @@ int main() {
         }
     }
 
-    // showImage("Bounded", imageClone);
+    showImage("Bounded", imageClone);
 
     /* Mat imageClone2 = imageClone.clone(); */
 
@@ -226,10 +226,10 @@ int main() {
         /* destroyAllWindows(); */
         if (i == answerMat.rows - 1) cout << answerMat.at<float>(i, 0) << " ]" << endl;
         else cout << answerMat.at<float>(i, 0) << ", ";
-        /* putText(imageClone, to_string((int) answerMat.at<float>(i, 0)), Point(numbersX.at(i), numbersY.at(i)), FONT_HERSHEY_PLAIN, 1.0, Scalar(0, 0, 255)); */
+        putText(imageClone, to_string((int) answerMat.at<float>(i, 0)), Point(numbersX.at(i), numbersY.at(i)), FONT_HERSHEY_PLAIN, 1.0, Scalar(0, 0, 255));
     }
 
-    /* showImage("Final", imageClone); */
+    showImage("Final", imageClone);
 
 
     return 0;
