@@ -4,7 +4,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/ml.hpp>
-#include <opencv4/opencv2/core/matx.hpp>
+#include <opencv2/core/matx.hpp>
 #include <string>
 
 using namespace std;
@@ -250,7 +250,6 @@ int main() {
         svm -> setType(ml::SVM::C_SVC);
 
         Ptr<ml::TrainData> data = ml::TrainData::create(hogMat, ml::ROW_SAMPLE, trainLabels);
-
 
         svm -> trainAuto(data);
 
