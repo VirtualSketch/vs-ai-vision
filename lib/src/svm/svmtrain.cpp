@@ -6,11 +6,11 @@
 #include <opencv2/ml.hpp>
 #include <opencv2/core/matx.hpp>
 #include <string>
-#include "utils/coordinatedMat.h"
-#include "utils/descriptordeterminer.cpp"
-#include "utils/imagepreprocessing.cpp"
-#include "utils/labelassigner.cpp"
-#include "utils/svm.cpp"
+#include "utils/coordinatedMat.hpp"
+#include "utils/descriptordeterminer.hpp"
+#include "utils/imagepreprocessing.hpp"
+#include "utils/labelassigner.hpp"
+#include "utils/svm.hpp"
 
 using namespace std;
 using namespace cv;
