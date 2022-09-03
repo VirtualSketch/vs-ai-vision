@@ -15,7 +15,7 @@
 using namespace std;
 using namespace cv;
 
-int main(void) {
+extern "C" void train(void) {
 
     Mat image1 = preprocessImage("./assets/numbers1.jpg", true);
     Mat image2 = preprocessImage("./assets/numbers2.jpg", true);
@@ -75,5 +75,5 @@ int main(void) {
 
     svmTrain(svm, totalHogDescriptorsMat, totalTrainLabels);
 
-    return 0;
+    return;
 }

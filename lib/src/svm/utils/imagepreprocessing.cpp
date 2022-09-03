@@ -5,7 +5,7 @@
 #include <opencv2/core/cvdef.h>
 #include <opencv2/core/mat.hpp>
 #include <string>
-#include "rectangledeterminer.cpp"
+#include "rectangledeterminer.hpp"
 
 using namespace std;
 using namespace cv;

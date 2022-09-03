@@ -14,7 +14,7 @@
 using namespace std;
 using namespace cv;
 
-int main(void) {
+extern "C" int predict(void) {
 
     /*
      * All predictions from image1 to image3 were used to
