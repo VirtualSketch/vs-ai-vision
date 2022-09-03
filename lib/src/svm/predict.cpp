@@ -27,7 +27,7 @@ extern "C" int predict(void) {
     // Mat image1 = preprocessImage("./assets/mynumbers.jpeg");
     // Mat image2 = preprocessImage("./assets/realtest2.jpeg");
     // Mat image3 = preprocessImage("./assets/realtest3.jpg");
-    Mat image4 = preprocessSymbols("./assets/expression2.jpg");
+    Mat image4 = preprocessSymbols("lib/src/svm/assets/expression2.jpg");
 
     // coordinatedMat coordMat1 = getBoundingSymbols(image1, 100);
     // coordinatedMat coordMat2 = getBoundingSymbols(image2, 100);
@@ -55,7 +55,7 @@ extern "C" int predict(void) {
     // Mat descriptorsMat3 = getHogDescriptorsMat(determineHogDescriptors(hog, coordMat3));
     Mat descriptorsMat4 = getHogDescriptorsMat(determineHogDescriptors(hog, coordMat4));
 
-    Ptr<ml::SVM> svm = ml::SVM::load("assets/trainedData.yml");
+    Ptr<ml::SVM> svm = ml::SVM::load("lib/src/svm/assets/trainedData.yml");
 
     // vector<string> answers1 = svmTest(svm, descriptorsMat1);
     // vector<string> answers2 = svmTest(svm, descriptorsMat2);
