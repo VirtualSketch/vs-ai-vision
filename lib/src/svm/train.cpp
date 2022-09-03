@@ -17,9 +17,9 @@ using namespace cv;
 
 extern "C" void train(void) {
 
-    Mat image1 = preprocessImage("./assets/numbers1.jpg", true);
-    Mat image2 = preprocessImage("./assets/numbers2.jpg", true);
-    Mat image3 = preprocessSymbols("./assets/symbols2.jpg");
+    Mat image1 = preprocessImage("lib/src/svm/assets/numbers1.jpg", true);
+    Mat image2 = preprocessImage("lib/src/svm/assets/numbers2.jpg", true);
+    Mat image3 = preprocessSymbols("lib/src/svm/assets/symbols2.jpg");
 
     coordinatedMat coordMat1 = getBoundingSymbols(image1, 100, true);
     coordinatedMat coordMat2 = getBoundingSymbols(image2, 1000, true);

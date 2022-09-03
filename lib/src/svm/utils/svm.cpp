@@ -35,7 +35,7 @@ void svmTrain(Ptr<ml::SVM> svm, Mat hogMat, vector<int> trainLabels) {
 
     svm -> trainAuto(data);
 
-    svm -> save("assets/trainedData.yml");
+    svm -> save("lib/src/svm/assets/trainedData.yml");
 }
 
 /*
