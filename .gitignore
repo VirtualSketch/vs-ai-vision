@@ -43,5 +43,5 @@ pubspec.lock
 *.app
 
 # Build output folder
-**/build
+# **/build
 
