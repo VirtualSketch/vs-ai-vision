@@ -27,6 +27,8 @@ int main(void) {
     /* bitwise_not(image, image); */
     /* showImage("Original", image); */
 
+    cout << image.cols << ", " << image.rows << endl;
+
     Mat resizedImage;
     resize(image, resizedImage, Size(700, 300));
     /* showImage("Resized", resizedImage); */
@@ -53,7 +55,7 @@ int main(void) {
 
         /* cout << "Drawing contours..." << endl; */
         Mat imageClone = resizedImage.clone();
-        drawContours(imageClone, contours, -1, Scalar(0, 255, 0), 1);
+        /* drawContours(imageClone, contours, -1, Scalar(0, 255, 0), 1); */
         /* showImage("Contours with NONE", imageClone); */
 
         imageClone = resizedImage.clone();
