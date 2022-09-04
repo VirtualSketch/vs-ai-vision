@@ -6,10 +6,8 @@ typedef CPredict = ffi.Void Function();
 typedef DPredict = void Function();
 
 class SVMFunctions {
-  final trainLib =
-      ffi.DynamicLibrary.open("vs-ai-vision/lib/src/svm/build/libtrain.so");
-  final predictLib =
-      ffi.DynamicLibrary.open("vs-ai-vision/lib/src/svm/build/libpredict.so");
+  final trainLib = ffi.DynamicLibrary.open("src/svm/build/libtrain.so");
+  final predictLib = ffi.DynamicLibrary.open("src/svm/build/libpredict.so");
 
   void train() {
     final _train = trainLib.lookupFunction<CTrain, DTrain>('train');
