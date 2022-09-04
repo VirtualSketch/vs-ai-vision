@@ -11,16 +11,16 @@ class SVMFunctions {
     print(Platform.script.toFilePath());
   }
 
-  final trainLib = ffi.DynamicLibrary.open("svm/build/libtrain.so");
-  final predictLib = ffi.DynamicLibrary.open("svm/build/libpredict.so");
-
-  void train() {
-    final _train = trainLib.lookupFunction<CTrain, DTrain>('train');
-    _train();
-  }
-
-  void predict() {
-    final _predict = predictLib.lookupFunction<CPredict, DPredict>('predict');
-    _predict();
-  }
+//  final trainLib = ffi.DynamicLibrary.open("svm/build/libtrain.so");
+//  final predictLib = ffi.DynamicLibrary.open("svm/build/libpredict.so");
+//
+//  void train() {
+//    final _train = trainLib.lookupFunction<CTrain, DTrain>('train');
+//    _train();
+//  }
+//
+//  void predict() {
+//    final _predict = predictLib.lookupFunction<CPredict, DPredict>('predict');
+//    _predict();
+//  }
 }
