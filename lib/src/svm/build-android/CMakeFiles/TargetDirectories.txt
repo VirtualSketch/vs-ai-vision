@@ -1,0 +1,5 @@
+/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build-android/CMakeFiles/svmutils.dir
+/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build-android/CMakeFiles/train.dir
+/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build-android/CMakeFiles/predict.dir
+/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build-android/CMakeFiles/edit_cache.dir
+/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build-android/CMakeFiles/rebuild_cache.dir
