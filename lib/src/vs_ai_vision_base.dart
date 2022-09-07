@@ -1,21 +1,21 @@
 import 'dart:ffi' as ffi;
+import 'package:ffi/ffi.dart';
 
 typedef CTrain = ffi.Void Function();
 typedef DTrain = void Function();
-typedef CPredict = ffi.Void Function();
-typedef DPredict = void Function();
+typedef CPredict = ffi.Pointer<Utf8> Function();
+typedef DPredict = ffi.Pointer<Utf8> Function();
 
 class SVMFunctions {
-  final trainLib = ffi.DynamicLibrary.open("src/svm/build/libtrain.so");
-  final predictLib = ffi.DynamicLibrary.open("src/svm/build/libpredict.so");
+  final svmUtilsLib = ffi.DynamicLibrary.open("libsvmutils.so");
 
   void train() {
-    final _train = trainLib.lookupFunction<CTrain, DTrain>('train');
+    final _train = svmUtilsLib.lookupFunction<CTrain, DTrain>('train');
     _train();
   }
 
-  void predict() {
-    final _predict = predictLib.lookupFunction<CPredict, DPredict>('predict');
-    _predict();
+  ffi.Pointer<Utf8> predict() {
+    final _predict = svmUtilsLib.lookupFunction<CPredict, DPredict>('predict');
+    return _predict();
   }
 }
