@@ -1,5 +1,0 @@
-/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build/CMakeFiles/svmutils.dir
-/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build/CMakeFiles/train.dir
-/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build/CMakeFiles/predict.dir
-/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build/CMakeFiles/edit_cache.dir
-/home/atikin/Documents/Programming/VirtualSketch/vs-ai-vision/lib/src/svm/build/CMakeFiles/rebuild_cache.dir
