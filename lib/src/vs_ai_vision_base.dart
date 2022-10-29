@@ -3,10 +3,13 @@ import 'package:ffi/ffi.dart';
 
 typedef CTrain = ffi.Void Function();
 typedef DTrain = void Function();
-typedef CPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<ffi.Uint8>, ffi.Int, ffi.Int);
+typedef CPredict = ffi.Pointer<Utf8> Function(
+    ffi.Pointer<ffi.Uint8>, ffi.Int, ffi.Int);
 typedef DPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<ffi.Uint8>, int, int);
 typedef CPredictSample = ffi.Pointer<Utf8> Function();
 typedef DPredictSample = ffi.Pointer<Utf8> Function();
+typedef CPredictWithPath = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
+typedef DPredictWithPath = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
 
 class SVMFunctions {
   final svmUtilsLib = ffi.DynamicLibrary.open("libsvmutils.so");
@@ -17,12 +20,21 @@ class SVMFunctions {
   }
 
   ffi.Pointer<Utf8> predictSample() {
-    final _predictSample = svmUtilsLib.lookupFunction<CPredictSample, DPredictSample>('predictSample');
+    final _predictSample = svmUtilsLib
+        .lookupFunction<CPredictSample, DPredictSample>('predictSample');
     return _predictSample();
   }
 
-  ffi.Pointer<Utf8> predict(ffi.Pointer<ffi.Uint8> imageList, int rows, int cols) {
+  ffi.Pointer<Utf8> predict(
+      ffi.Pointer<ffi.Uint8> imageList, int rows, int cols) {
     final _predict = svmUtilsLib.lookupFunction<CPredict, DPredict>('predict');
     return _predict(imageList, rows, cols);
   }
+
+  ffi.Pointer<Utf8> predictWithPath(ffi.Pointer<Utf8> imagePath) {
+    final _predictWithPath = svmUtilsLib
+        .lookupFunction<CPredictWithPath, DPredictWithPath>('predictWithPath');
+    return _predictWithPath(imagePath);
+  }
 }
+
