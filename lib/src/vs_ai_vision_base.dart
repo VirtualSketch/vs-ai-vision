@@ -3,8 +3,8 @@ import 'package:ffi/ffi.dart';
 
 typedef CTrain = ffi.Void Function();
 typedef DTrain = void Function();
-typedef CPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<ffi.Uint8>, ffi.Int, ffi.Int);
-typedef DPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<ffi.Uint8>, int, int);
+typedef CPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
+typedef DPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
 typedef CPredictSample = ffi.Pointer<Utf8> Function();
 typedef DPredictSample = ffi.Pointer<Utf8> Function();
 
@@ -21,8 +21,8 @@ class SVMFunctions {
     return _predictSample();
   }
 
-  ffi.Pointer<Utf8> predict(ffi.Pointer<ffi.Uint8> imageList, int rows, int cols) {
+  ffi.Pointer<Utf8> predict(ffi.Pointer<Utf8> imagePath) {
     final _predict = svmUtilsLib.lookupFunction<CPredict, DPredict>('predict');
-    return _predict(imageList, rows, cols);
+    return _predict(imagePath);
   }
 }
