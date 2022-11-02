@@ -4,7 +4,7 @@ import 'package:ffi/ffi.dart';
 typedef CTrain = ffi.Void Function();
 typedef DTrain = void Function();
 typedef CPredict = ffi.Pointer<Utf8> Function(
-    ffi.Pointer<ffi.Uint8>, ffi.Int, ffi.Int);
+    ffi.Pointer<ffi.Uint8>, ffi.Int32, ffi.Int32);
 typedef DPredict = ffi.Pointer<Utf8> Function(ffi.Pointer<ffi.Uint8>, int, int);
 typedef CPredictSample = ffi.Pointer<Utf8> Function();
 typedef DPredictSample = ffi.Pointer<Utf8> Function();
@@ -37,4 +37,3 @@ class SVMFunctions {
     return _predictWithPath(imagePath);
   }
 }
-
